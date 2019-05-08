@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.github.attemper.java.sdk</groupId>
+	<artifactId>attemper-java-sdk</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>${project.artifactId}-common</module>
+		<module>${project.artifactId}-rest</module>
+		<module>${project.artifactId}-rest-executor2biz</module>
+
+		<module>${project.artifactId}-microservice</module>
+		<module>${project.artifactId}-common-executor2biz</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.5</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
+		<httpclient.version>4.5.5</httpclient.version>
+		<eureka.client.version>1.6.2</eureka.client.version>
+		<junit.version>4.12</junit.version>
+		<jackson.version>2.5.4</jackson.version>
+
+		<maven.compiler.plugin.version>2.1</maven.compiler.plugin.version>
+		<maven.source.plugin.version>2.1.1</maven.source.plugin.version>
+		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
+		<skip.maven.deploy>false</skip.maven.deploy>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- http client -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
+			</dependency>
+			<!-- junit4 -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.netflix.eureka</groupId>
+				<artifactId>eureka-client</artifactId>
+				<version>${eureka.client.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+  				<artifactId>jackson-databind</artifactId>
+  				<version>${jackson.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven.source.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>${skip.maven.deploy}</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
