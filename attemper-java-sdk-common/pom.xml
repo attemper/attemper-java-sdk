@@ -12,4 +12,12 @@
 	<build>
 		<finalName>${project.parent.artifactId}-common</finalName>
 	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>

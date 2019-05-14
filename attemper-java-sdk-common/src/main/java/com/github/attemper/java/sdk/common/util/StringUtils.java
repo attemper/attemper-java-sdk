@@ -154,4 +154,7 @@ public class StringUtils {
         return str1 == null ? str2 == null : str1.equalsIgnoreCase(str2);
     }
 
+	public static String trimToEmpty(String str) {
+		return str == null ? "" : str.trim();
+	}
 }

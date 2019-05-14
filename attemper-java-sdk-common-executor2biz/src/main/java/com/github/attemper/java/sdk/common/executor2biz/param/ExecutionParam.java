@@ -1,8 +1,8 @@
 package com.github.attemper.java.sdk.common.executor2biz.param;
 
-public class ExecutionParam {
+import com.github.attemper.java.sdk.common.param.execution.BaseExecutionParam;
 
-    protected String actInstId;
+public class ExecutionParam extends BaseExecutionParam {
 
     protected String parentActInstId;
 
@@ -15,15 +15,6 @@ public class ExecutionParam {
     protected String actId;
 
     protected String actName;
-
-    public String getActInstId() {
-        return actInstId;
-    }
-
-    public ExecutionParam setActInstId(String actInstId) {
-        this.actInstId = actInstId;
-        return this;
-    }
 
     public String getParentActInstId() {
         return parentActInstId;

@@ -1,7 +1,7 @@
 package com.github.attemper.java.sdk.rest.context;
 
-import com.github.attemper.java.sdk.common.param.CommonParam;
-import com.github.attemper.java.sdk.common.result.CommonResult;
+import com.github.attemper.java.sdk.common.param.BaseParam;
+import com.github.attemper.java.sdk.common.result.BaseResult;
 import org.apache.http.Header;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public class DefaultContext<T> implements AttemperContext<T> {
 
     private List<Header> headers;
 
-    private CommonParam commonParam;
+    private BaseParam baseParam;
 
-    private CommonResult commonResult;
+    private BaseResult baseResult;
 
     private T result;
 
@@ -38,13 +38,13 @@ public class DefaultContext<T> implements AttemperContext<T> {
         return this;
     }
 
-    public DefaultContext commonParam(CommonParam commonParam) {
-        this.commonParam = commonParam;
+    public DefaultContext commonParam(BaseParam baseParam) {
+        this.baseParam = baseParam;
         return this;
     }
 
-    public DefaultContext commonResult(CommonResult commonResult) {
-        this.commonResult = commonResult;
+    public DefaultContext commonResult(BaseResult baseResult) {
+        this.baseResult = baseResult;
         return this;
     }
 
@@ -65,12 +65,12 @@ public class DefaultContext<T> implements AttemperContext<T> {
         return headers;
     }
 
-    public CommonParam getCommonParam() {
-        return commonParam;
+    public BaseParam getBaseParam() {
+        return baseParam;
     }
 
-    public CommonResult getCommonResult() {
-        return commonResult;
+    public BaseResult getBaseResult() {
+        return baseResult;
     }
 
     public T getResult() {
@@ -83,8 +83,8 @@ public class DefaultContext<T> implements AttemperContext<T> {
                 "url='" + url + '\'' +
                 ", requestMethod='" + requestMethod + '\'' +
                 ", headers=" + headers +
-                ", commonParam=" + commonParam +
-                ", commonResult=" + commonResult +
+                ", baseParam=" + baseParam +
+                ", baseResult=" + baseResult +
                 ", result=" + result +
                 '}';
     }

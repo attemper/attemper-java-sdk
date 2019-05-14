@@ -1,7 +1,7 @@
 package com.github.attemper.java.sdk.rest.context;
 
-import com.github.attemper.java.sdk.common.param.CommonParam;
-import com.github.attemper.java.sdk.common.result.CommonResult;
+import com.github.attemper.java.sdk.common.param.BaseParam;
+import com.github.attemper.java.sdk.common.result.BaseResult;
 import org.apache.http.Header;
 
 import java.util.List;
@@ -17,9 +17,9 @@ public interface AttemperContext<T> {
 
     AttemperContext headers(List<Header> headers);
 
-    AttemperContext commonParam(CommonParam commonParam);
+    AttemperContext commonParam(BaseParam baseParam);
 
-    AttemperContext commonResult(CommonResult commonResult);
+    AttemperContext commonResult(BaseResult baseResult);
 
     AttemperContext result(T result);
 
@@ -29,9 +29,9 @@ public interface AttemperContext<T> {
 
     List<Header> getHeaders();
 
-    CommonParam getCommonParam();
+    BaseParam getBaseParam();
 
-    CommonResult getCommonResult();
+    BaseResult getBaseResult();
 
     T getResult();
 }

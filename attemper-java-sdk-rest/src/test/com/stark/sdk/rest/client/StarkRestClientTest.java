@@ -1,3 +1,4 @@
+/*
 package com.stark.sdk.rest.client;
 
 import com.stark.sdk.common.param.login.LoginParam;
@@ -11,9 +12,11 @@ import org.apache.http.HttpRequest;
 import org.junit.Test;
 
 
+*/
 /**
  * @author ldang
- */
+ *//*
+
 public class StarkRestClientTest {
 
     private static final String TENANT_ID = "stark";
@@ -65,3 +68,4 @@ public class StarkRestClientTest {
         }
     }
 }
+*/

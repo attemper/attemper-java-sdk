@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.attemper.java.sdk.common.constant.SdkCommonConstants;
-import com.github.attemper.java.sdk.common.exception.RTException;
-import com.github.attemper.java.sdk.common.param.CommonParam;
-import com.github.attemper.java.sdk.common.result.CommonResult;
+import com.github.attemper.java.sdk.common.param.BaseParam;
+import com.github.attemper.java.sdk.common.result.BaseResult;
+import com.github.attemper.java.sdk.common.result.sys.login.LoginResult;
 import com.github.attemper.java.sdk.common.util.DateUtil;
 import com.github.attemper.java.sdk.rest.client.RestClient;
 import com.github.attemper.java.sdk.rest.context.AttemperContext;
@@ -16,7 +16,6 @@ import com.github.attemper.java.sdk.rest.handler.AfterHandler;
 import com.github.attemper.java.sdk.rest.handler.PreHandler;
 import com.github.attemper.java.sdk.rest.interceptor.RequestInterceptor;
 import org.apache.commons.codec.CharEncoding;
-import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -28,6 +27,7 @@ import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
@@ -40,8 +40,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * http客户端工具
- * @auth ldang
+ * http util
+ * @author ldang
  */
 public class HttpClientSingleton {
 
@@ -52,8 +52,6 @@ public class HttpClientSingleton {
     private List<PreHandler> preHandlers;
 
     private List<AfterHandler> afterHandlers;
-
-	private List<Header> headers;
 	
 	private static ObjectMapper mapper = new ObjectMapper();
 
@@ -84,7 +82,7 @@ public class HttpClientSingleton {
 	 * @param clazz
 	 * @return
 	 */
-	public CommonResult post(String url, Object paramObj, Class<?> clazz){
+	public BaseResult post(String url, Object paramObj, Class<?> clazz){
 		HttpPost httpPost = new HttpPost(url);
         try{
             String json = mapper.writeValueAsString(paramObj);
@@ -95,7 +93,7 @@ public class HttpClientSingleton {
             context
                     .url(url)
                     .requestMethod(HttpPost.METHOD_NAME)
-                    .commonParam(paramObj instanceof CommonParam ? (CommonParam) paramObj : null);
+                    .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
             return execute(httpPost, context, clazz);
         }catch (JsonProcessingException e){
             e.printStackTrace();
@@ -109,7 +107,7 @@ public class HttpClientSingleton {
 	 * @param clazz
 	 * @return
 	 */
-	public CommonResult get(String url, Object paramObj, Class<?> clazz){
+	public BaseResult get(String url, Object paramObj, Class<?> clazz){
         try {
             URIBuilder builder = new URIBuilder(url);
             builder.setCharset(Charset.forName(CharEncoding.UTF_8));
@@ -120,7 +118,7 @@ public class HttpClientSingleton {
             context
                     .url(url)
                     .requestMethod(HttpGet.METHOD_NAME)
-                    .commonParam(paramObj instanceof CommonParam ? (CommonParam) paramObj : null);
+                    .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
             return execute(new HttpGet(builder.build()), context, clazz);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -136,51 +134,48 @@ public class HttpClientSingleton {
      * @param clazz
      * @return
      */
-	private CommonResult execute(HttpUriRequest httpUriRequest, AttemperContext context, Class<?> clazz) {
-        CommonResult commonResult = null;
+	private BaseResult execute(HttpUriRequest httpUriRequest, AttemperContext context, Class<?> clazz) {
+        BaseResult baseResult = null;
         CloseableHttpClient httpClient = null;
 	    HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 	    try {
-            httpUriRequest.setHeaders(headers.toArray(new Header[]{}));
-            /*if(token != null) {
-                httpUriRequest.addHeader(new BasicHeader(SdkCommonConstants.token, token));
-            }*/
+            httpUriRequest.setHeader(new BasicHeader(SdkCommonConstants.token, token));
             httpClientBuilder.addInterceptorFirst(new RequestInterceptor(preHandlers, context));
             httpClient = httpClientBuilder.build();
             HttpResponse response = httpClient.execute(httpUriRequest);
-            if(HttpStatus.SC_OK == response.getStatusLine().getStatusCode()){
-                String starkResultStr = EntityUtils.toString(response.getEntity());
-                JsonNode jsonNode = mapper.readTree(starkResultStr);
-                commonResult = toResult(jsonNode);
-                /*if(commonResult.getCode() == 1000 || commonResult.getCode() == 1002) { //token为空或过期
-                    CommonResult<TokenResult> tokenResult = restClient.refreshToken();
-                    token = tokenResult.getResult().getToken();
-                    return execute(httpUriRequest, context, clazz);
-                }*/
-                context.commonResult(commonResult);
-                if(jsonNode.has(SdkCommonConstants.result)){
-                    Object result = mapper.readValue(
-                            mapper.writeValueAsString(jsonNode.get(SdkCommonConstants.result)), clazz);
-                    commonResult.setResult(result);
-                    context.result(result);
-                }
-                if(afterHandlers != null) {
-                    for(AfterHandler afterHandler : afterHandlers) {
-                        afterHandler.executeAlways(context);
-                        if(commonResult != null) {
-                            if(commonResult.getCode() == SdkCommonConstants.OK) {
-                                afterHandler.executeOf200(context);
-                            }else{
-                                afterHandler.executeNot200(context);
+            switch (response.getStatusLine().getStatusCode()) {
+                case HttpStatus.SC_OK:
+                    String starkResultStr = EntityUtils.toString(response.getEntity());
+                    JsonNode jsonNode = mapper.readTree(starkResultStr);
+                    baseResult = toResult(jsonNode);
+                    context.commonResult(baseResult);
+                    if(jsonNode.has(SdkCommonConstants.result)){
+                        Object result = mapper.readValue(
+                                mapper.writeValueAsString(jsonNode.get(SdkCommonConstants.result)), clazz);
+                        baseResult.setResult(result);
+                        context.result(result);
+                    }
+                    if(afterHandlers != null) {
+                        for(AfterHandler afterHandler : afterHandlers) {
+                            afterHandler.executeAlways(context);
+                            if(baseResult != null) {
+                                if(baseResult.getCode() == SdkCommonConstants.OK) {
+                                    afterHandler.executeOf200(context);
+                                }else{
+                                    afterHandler.executeNot200(context);
+                                }
                             }
                         }
                     }
-                }
+                    break;
+                case HttpStatus.SC_UNAUTHORIZED:
+                    BaseResult<LoginResult> tokenResult = restClient.login();
+                    token = tokenResult.getResult().getToken();
+                    return execute(httpUriRequest, context, clazz);
+                default: break;
             }
-        } catch (RTException rte){
-	      throw rte;
         } catch (HttpHostConnectException ex){
-	        restClient.removeDisconnectAdress();
+	        restClient.removeDisconnectAddress();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -192,7 +187,7 @@ public class HttpClientSingleton {
                 e.printStackTrace();
             }
         }
-        return commonResult;
+        return baseResult;
     }
 
     /**
@@ -206,8 +201,8 @@ public class HttpClientSingleton {
         Field[] fields = clazz.getDeclaredFields();
         if(fields != null) {
             for (Field field : fields) {
+                field.setAccessible(true);
                 if(field.get(paramObj) != null) {
-                    field.setAccessible(true);
                     String value;
                     if (field.getDeclaringClass() == Integer.class) {
                         value = String.valueOf(field.getInt(paramObj));
@@ -239,8 +234,8 @@ public class HttpClientSingleton {
      * @param jsonNode
      * @return
      */
-	private CommonResult toResult(JsonNode jsonNode) {
-        CommonResult result = new CommonResult();
+	private BaseResult toResult(JsonNode jsonNode) {
+        BaseResult result = new BaseResult();
         if(jsonNode.has(SdkCommonConstants.code)) {
             result.setCode(jsonNode.get(SdkCommonConstants.code).asInt());
         }
@@ -257,10 +252,6 @@ public class HttpClientSingleton {
         return result;
     }
 
-    public void setHeaders(List<Header> headers) {
-		this.headers = headers;
-	}
-
     public void registerPreHandlers(List<PreHandler> preHandlers) {
         this.preHandlers = preHandlers;
     }
@@ -271,5 +262,9 @@ public class HttpClientSingleton {
 
     public void setRestClient(RestClient restClient){
 	    this.restClient = restClient;
+    }
+
+    public void setToken(String token) {
+	    this.token = token;
     }
 }

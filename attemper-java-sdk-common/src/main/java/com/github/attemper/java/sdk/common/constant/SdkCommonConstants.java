@@ -11,18 +11,6 @@ public interface SdkCommonConstants {
 
     String APPLICATION_JSON = "application/json";
 
-    String page = "page";
-
-    String list = "list";
-
-    String userName = "userName";
-
-    String tenantId = "tenantId";
-
-    String sign = "sign";
-
-    String header = "header";
-
     String token = "token";
 
     String code = "code";
@@ -40,6 +28,4 @@ public interface SdkCommonConstants {
     int DEF_PAGE_SIZE = 10;
 
     int MAX_PAGE_SIZE = 1000;
-
-    String REGEX_EMAIL = "[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?";
 }
