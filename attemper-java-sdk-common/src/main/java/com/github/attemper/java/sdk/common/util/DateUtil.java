@@ -6,26 +6,43 @@ import java.util.Date;
 /**
  * 日期工具类
  */
-public class DateUtil{
+public class DateUtil {
 
-	public static final String DATE_FORMAT_YYYYMMDDHHMMSSSSS="yyyy-MM-dd HH:mm:ss SSS";
+    public static final String DATE_FORMAT_YYYYMMDD = "yyyy-MM-dd";
 
-	/**
-	 * 将日期字符串转换为yyyy-MM-dd HH:mm:ss SSS的格式的日期
-	 * @param dateStr
-	 * @return
-	 */
-	public static synchronized Date parseDateStrToYYYYMMDDHHMMSSSSS(String dateStr) {
-		if(dateStr == null) {
-			return null;
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_YYYYMMDDHHMMSSSSS);
-		Date date;
-		try{
-			date = sdf.parse(dateStr);
-		}catch (Exception e){
-			date = null;
-		}
-		return date;
-	}
+    public static final String DATE_FORMAT_YYYYMMDDHHMMSSSSS = "yyyy-MM-dd HH:mm:ss SSS";
+
+    /**
+     * format date string to date of yyyy-MM-dd
+     *
+     * @param dateStr
+     * @return
+     */
+    public static synchronized Date parseDateStrToYYYYMMDD(String dateStr) {
+        return getDate(dateStr, DATE_FORMAT_YYYYMMDD);
+    }
+
+    /**
+     * format date string to date of yyyy-MM-dd HH:mm:ss SSS
+     *
+     * @param dateStr
+     * @return
+     */
+    public static synchronized Date parseDateStrToYYYYMMDDHHMMSSSSS(String dateStr) {
+        return getDate(dateStr, DATE_FORMAT_YYYYMMDDHHMMSSSSS);
+    }
+
+    private static Date getDate(String dateStr, String format) {
+        if (dateStr == null) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        Date date;
+        try {
+            date = sdf.parse(dateStr);
+        } catch (Exception e) {
+            date = null;
+        }
+        return date;
+    }
 }
