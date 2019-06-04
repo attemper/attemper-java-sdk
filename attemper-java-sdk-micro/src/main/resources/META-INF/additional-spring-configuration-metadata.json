@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "dispatch.userName",
+      "defaultValue": ""
+    },
+    {
+      "name": "dispatch.password",
+      "defaultValue": "executor"
+    }
+  ]
+}
+

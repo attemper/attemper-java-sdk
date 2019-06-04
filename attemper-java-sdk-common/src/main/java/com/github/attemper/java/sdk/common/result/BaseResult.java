@@ -43,7 +43,6 @@ public class BaseResult<T> implements Serializable {
 	}
 
 	/**
-	 * 使用code和msg构造Res，此方法私有，通过定义ResStatus来处理
 	 * @param code
 	 * @param msg
 	 * @return

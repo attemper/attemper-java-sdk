@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "dispatch.executor.serviceName",
+      "defaultValue": "executor"
+    }
+  ]
+}
+

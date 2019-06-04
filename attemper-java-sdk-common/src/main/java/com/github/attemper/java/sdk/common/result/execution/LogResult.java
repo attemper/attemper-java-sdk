@@ -2,9 +2,26 @@ package com.github.attemper.java.sdk.common.result.execution;
 
 public class LogResult {
 
+    protected boolean success = true;
+
     protected String logKey;
 
     protected String logText;
+
+    public boolean getSuccess() {
+        return success;
+    }
+
+    /**
+     * The default vaule is <code>true</code>
+     *
+     * @param success
+     * @return
+     */
+    public LogResult setSuccess(boolean success) {
+        this.success = success;
+        return this;
+    }
 
     public String getLogKey() {
         return logKey;

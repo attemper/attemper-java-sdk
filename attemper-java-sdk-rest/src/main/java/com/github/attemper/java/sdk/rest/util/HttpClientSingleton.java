@@ -1,7 +1,5 @@
 package com.github.attemper.java.sdk.rest.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.attemper.java.sdk.common.constant.SdkCommonConstants;
@@ -15,6 +13,7 @@ import com.github.attemper.java.sdk.rest.context.DefaultContext;
 import com.github.attemper.java.sdk.rest.handler.AfterHandler;
 import com.github.attemper.java.sdk.rest.handler.PreHandler;
 import com.github.attemper.java.sdk.rest.interceptor.RequestInterceptor;
+import com.github.attemper.java.sdk.rest.spring.SpringContextUtil;
 import org.apache.commons.codec.CharEncoding;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -35,7 +34,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,15 +50,8 @@ public class HttpClientSingleton {
     private List<PreHandler> preHandlers;
 
     private List<AfterHandler> afterHandlers;
-	
-	private static ObjectMapper mapper = new ObjectMapper();
 
 	private static String token;
-	
-	static {
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		mapper.setDateFormat(new SimpleDateFormat(DateUtil.DATE_FORMAT_YYYYMMDDHHMMSSSSS));
-	}
 
     private HttpClientSingleton() {}
 
@@ -84,21 +75,16 @@ public class HttpClientSingleton {
 	 */
 	public BaseResult post(String url, Object paramObj, Class<?> clazz){
 		HttpPost httpPost = new HttpPost(url);
-        try{
-            String json = mapper.writeValueAsString(paramObj);
-            StringEntity strEntity = new StringEntity(json, Charset.forName(CharEncoding.UTF_8));
-            strEntity.setContentType(SdkCommonConstants.APPLICATION_JSON);
-            httpPost.setEntity(strEntity);
-            AttemperContext context = new DefaultContext();
-            context
-                    .url(url)
-                    .requestMethod(HttpPost.METHOD_NAME)
-                    .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
-            return execute(httpPost, context, clazz);
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
-            return null;
-        }
+        String json = BeanUtil.bean2JsonStr(paramObj);
+        StringEntity strEntity = new StringEntity(json, Charset.forName(CharEncoding.UTF_8));
+        strEntity.setContentType(SdkCommonConstants.APPLICATION_JSON);
+        httpPost.setEntity(strEntity);
+        AttemperContext context = new DefaultContext();
+        context
+                .url(url)
+                .requestMethod(HttpPost.METHOD_NAME)
+                .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
+        return execute(httpPost, context, clazz);
 	}
 
 	/**
@@ -146,12 +132,12 @@ public class HttpClientSingleton {
             switch (response.getStatusLine().getStatusCode()) {
                 case HttpStatus.SC_OK:
                     String starkResultStr = EntityUtils.toString(response.getEntity());
-                    JsonNode jsonNode = mapper.readTree(starkResultStr);
+                    JsonNode jsonNode = SpringContextUtil.getBean(ObjectMapper.class).readTree(starkResultStr);
                     baseResult = toResult(jsonNode);
                     context.commonResult(baseResult);
                     if(jsonNode.has(SdkCommonConstants.result)){
-                        Object result = mapper.readValue(
-                                mapper.writeValueAsString(jsonNode.get(SdkCommonConstants.result)), clazz);
+                        Object result = SpringContextUtil.getBean(ObjectMapper.class).readValue(
+                                BeanUtil.bean2JsonStr(jsonNode.get(SdkCommonConstants.result)), clazz);
                         baseResult.setResult(result);
                         context.result(result);
                     }
