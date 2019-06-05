@@ -6,7 +6,7 @@
     },
     {
       "name": "dispatch.password",
-      "defaultValue": "executor"
+      "defaultValue": ""
     }
   ]
 }
