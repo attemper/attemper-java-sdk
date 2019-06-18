@@ -42,7 +42,7 @@ public class RestClient {
 	}
 
     public BaseResult<LoginResult> login() {
-		return HttpClientSingleton.getInstance().post(getUrl(SdkAPIPath.LoginPath.LOGIN_BY_USERNAME_PWD), loginParam, LoginResult.class);
+		return HttpClientSingleton.getInstance().post(getUrl(SdkAPIPath.LoginPath.LOGIN_BY_ENCODED_USERNAME_PWD), loginParam, LoginResult.class);
 	}
 	
 	/**

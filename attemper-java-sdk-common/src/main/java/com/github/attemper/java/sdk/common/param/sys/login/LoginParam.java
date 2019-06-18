@@ -11,11 +11,11 @@ public class LoginParam implements BaseParam {
 
     public String validate() {
         if(StringUtils.isBlank(userName)){
-            return "5000";
+            return "5100";
         }
 
         if(StringUtils.isBlank(password)) {
-            return "5003";
+            return "5101";
         }
         return null;
     }

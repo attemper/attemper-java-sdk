@@ -23,6 +23,6 @@ public class SdkAPIPath {
     public static final class LoginPath {
         public static final String SUB_PATH = "/login";
 
-        public static final String LOGIN_BY_USERNAME_PWD = API_PATH + SYS + SUB_PATH;
+        public static final String LOGIN_BY_ENCODED_USERNAME_PWD = API_PATH + SYS + SUB_PATH + "/encoded";
     }
 }
