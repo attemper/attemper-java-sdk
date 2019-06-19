@@ -141,7 +141,7 @@
 		<version>7</version>
 	</parent>
 	<description>The sdk of attemper</description>
-	<url>https://github.com/attemper/attemper-java-sdk</url>
+	<url>https://github.com/attemper/${project.artifactId}</url>
 	<organization>
 		<name>Shanghai Stock Exchange</name>
 		<url>http://www.sse.com.cn</url>
@@ -154,18 +154,18 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:git:git@github.com:attemper/attemper-java-sdk.git</connection>
-		<developerConnection>scm:git:git@github.com:attemper/attemper-java-sdk.git</developerConnection>
+		<connection>scm:git:git@github.com:attemper/${project.artifactId}.git</connection>
+		<developerConnection>scm:git:git@github.com:attemper/${project.artifactId}.git</developerConnection>
 		<tag/>
-		<url>https://github.com/attemper/attemper-java-sdk</url>
+		<url>https://github.com/attemper/${project.artifactId}</url>
 	</scm>
 	<issueManagement>
 		<system>Issue</system>
-		<url>https://github.com/attemper/attemper-java-sdk/issues</url>
+		<url>https://github.com/attemper/${project.artifactId}/issues</url>
 	</issueManagement>
 	<developers>
 		<developer>
-			<id>ldang64</id>
+			<id>ldang264</id>
 			<name>Dang Ling</name>
 			<email>ldang@sse.com.cn</email>
 			<organization>Shanghai Stock Exchange</organization>
