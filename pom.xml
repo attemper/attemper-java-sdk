@@ -28,6 +28,7 @@
 		<spring.version>4.3.0.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<jackson.version>2.9.9</jackson.version>
+		<slf4j.version>1.7.7</slf4j.version>
 
 		<maven.compiler.plugin.version>2.1</maven.compiler.plugin.version>
 		<maven.source.plugin.version>2.1.1</maven.source.plugin.version>
@@ -89,6 +90,12 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
   				<artifactId>jackson-databind</artifactId>
   				<version>${jackson.version}</version>
+			</dependency>
+			<!-- slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
 			</dependency>
 			<!-- junit4 -->
 			<dependency>
