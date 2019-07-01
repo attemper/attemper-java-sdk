@@ -8,9 +8,12 @@ public class ExecutorAPIPath {
 
     public static final String APPEND_LOG = SdkAPIPath.API_PATH + "/log/append";
 
-    private static final String BASE_ROUTER_PATH = "/router";
+    public static final class RouterPath {
+        private static final String SUB_PATH = "/router";
 
-    public static final String ROUTER_PATH_SYNC = SdkAPIPath.API_PATH + BASE_ROUTER_PATH + "/sync";
+        public static final String SYNC = SdkAPIPath.API_PATH + SUB_PATH + "/sync";
 
-    public static final String ROUTER_PATH_ASYNC = SdkAPIPath.API_PATH + BASE_ROUTER_PATH + "/async";
+        public static final String ASYNC = SdkAPIPath.API_PATH + SUB_PATH + "/async";
+    }
+
 }

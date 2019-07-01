@@ -46,18 +46,18 @@ public class RestClient {
 	}
 	
 	/**
-     * 计算url
-	 * @param apiPath 拼接具体接口地址
+     * execute url
+	 * @param apiPath api path
 	 * @return
 	 */
 	protected String getUrl(String apiPath) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getAddress()).append(StringUtils.trimToEmpty(contextPath)).append(apiPath);
-		return  sb.toString();
+		return sb.toString();
 	}
 	
 	/**
-	 * 获取服务地址
+	 * service address
 	 * @return
 	 */
 	protected String getAddress(){

@@ -9,10 +9,13 @@
 	<modules>
 		<module>${project.artifactId}-common</module>
 		<module>${project.artifactId}-common-executor</module>
+		<module>${project.artifactId}-common-web</module>
 		<module>${project.artifactId}-rest</module>
 		<module>${project.artifactId}-rest-executor</module>
+		<module>${project.artifactId}-rest-web</module>
 		<module>${project.artifactId}-micro</module>
 		<module>${project.artifactId}-micro-executor</module>
+		<module>${project.artifactId}-micro-web</module>
 	</modules>
 
 	<properties>

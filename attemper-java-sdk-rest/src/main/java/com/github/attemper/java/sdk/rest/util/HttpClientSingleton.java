@@ -18,6 +18,7 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -67,7 +68,7 @@ public class HttpClientSingleton {
     }
 
 	/**
-	 * HttpClient发送POST请求
+     * post
 	 * @param url
 	 * @param paramObj
 	 * @param clazz
@@ -87,13 +88,29 @@ public class HttpClientSingleton {
         return execute(httpPost, context, clazz);
 	}
 
-	/**
-	 * HttpClient发送GET请求
-	 * @param url 地址(自行拼接参数)
+    /**
+     * post
+     *
+     * @param url
+     * @param paramObj
+     * @param clazz
+     * @return
+     */
+    public BaseResult delete(String url, Object paramObj, Class<?> clazz) {
+        return getOrDelete(HttpDelete.METHOD_NAME, url, paramObj, clazz);
+    }
+
+    /**
+     * get
+     * @param url
 	 * @param clazz
 	 * @return
 	 */
 	public BaseResult get(String url, Object paramObj, Class<?> clazz){
+        return getOrDelete(HttpGet.METHOD_NAME, url, paramObj, clazz);
+	}
+
+	private BaseResult getOrDelete(String methodName, String url, Object paramObj, Class<?> clazz) {
         try {
             URIBuilder builder = new URIBuilder(url);
             builder.setCharset(Charset.forName(CharEncoding.UTF_8));
@@ -103,19 +120,20 @@ public class HttpClientSingleton {
             AttemperContext context = new DefaultContext();
             context
                     .url(url)
-                    .requestMethod(HttpGet.METHOD_NAME)
+                    .requestMethod(methodName)
                     .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
-            return execute(new HttpGet(builder.build()), context, clazz);
+            HttpUriRequest httpUriRequest = HttpDelete.METHOD_NAME.equals(methodName)
+                    ? new HttpDelete(builder.build()) : new HttpGet(builder.build());
+            return execute(httpUriRequest, context, clazz);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }  catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
-	}
+    }
 
     /**
-     * 执行请求
      * @param httpUriRequest
      * @param clazz
      * @return
@@ -177,7 +195,6 @@ public class HttpClientSingleton {
     }
 
     /**
-     * 参数转化
      * @param paramObj
      * @return
      */
@@ -216,7 +233,7 @@ public class HttpClientSingleton {
     }
 
     /**
-     * json node转result
+     * json node to result
      * @param jsonNode
      * @return
      */
@@ -250,7 +267,4 @@ public class HttpClientSingleton {
 	    this.restClient = restClient;
     }
 
-    public void setToken(String token) {
-	    this.token = token;
-    }
 }

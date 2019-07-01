@@ -15,7 +15,7 @@ public class SyncRouterController {
     @Autowired
     private RouterService service;
 
-    @PostMapping(value = ExecutorAPIPath.ROUTER_PATH_SYNC)
+    @PostMapping(value = ExecutorAPIPath.RouterPath.SYNC)
     public TaskResult syncRouter(@RequestBody RouterParam routerParam) {
         return (TaskResult) service.route(routerParam);
     }
