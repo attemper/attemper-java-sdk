@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "dispatch.web.serviceName",
+      "defaultValue": "attemper-web"
+    }
+  ]
+}
+
