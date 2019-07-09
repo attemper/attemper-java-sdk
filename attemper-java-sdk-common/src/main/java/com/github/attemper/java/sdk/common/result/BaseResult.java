@@ -2,39 +2,33 @@ package com.github.attemper.java.sdk.common.result;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 返回数据封装类
- * @auth ldang
- */
-public class BaseResult<T> implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class BaseResult<T> {
 
 	/**
-	 * 状态码
+	 * app code
 	 */
 	protected int code;
 
 	/**
-	 * 状态信息
+	 * success/tip/error msg
 	 */
 	protected String msg;
 
 	/**
-	 * 响应时刻，字符串格式 yyyy-MM-dd HH:mm:ss
+	 * response time,format is yyyy-MM-dd HH:mm:ss
 	 */
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
 	protected Date responseTime;
 
 	/**
-	 * 处理耗时，单位秒
+	 * time unit is second
 	 */
 	protected String duration;
 
 	/**
-	 * 数据实体
+	 * data body
 	 */
 	protected T result;
 
