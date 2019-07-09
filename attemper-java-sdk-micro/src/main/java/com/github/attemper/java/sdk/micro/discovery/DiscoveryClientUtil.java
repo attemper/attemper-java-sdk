@@ -7,16 +7,13 @@ import java.util.List;
 
 public class DiscoveryClientUtil {
 
-    public static String getAddress(DiscoveryClient discoveryClient, String defAddress, String serviceName, List<String> serviceUrls) {
-        if(discoveryClient == null){
-            return defAddress;
-        }
+    public static String getAddress(DiscoveryClient discoveryClient, String serviceName, List<String> serviceUrls) {
         try {
             List<ServiceInstance> instances = discoveryClient.getInstances(serviceName.toUpperCase());
             if (instances.isEmpty()) {
                 instances = discoveryClient.getInstances(serviceName);
                 if (instances.isEmpty()) {
-                    return defAddress;
+                    throw new RuntimeException("instances is empty:" + serviceName);
                 }
             }
             int randomIndex = (int) (Math.random() * instances.size());
@@ -27,8 +24,7 @@ public class DiscoveryClientUtil {
             }
             return realUrl;
         } catch (Exception e) {
-            e.printStackTrace();
-            return defAddress;
+            throw new RuntimeException("get instances occurred exception:" + serviceName + "\n" + e.getMessage());
         }
     }
 }

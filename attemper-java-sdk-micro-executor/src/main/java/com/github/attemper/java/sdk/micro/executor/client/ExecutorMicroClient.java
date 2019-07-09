@@ -27,7 +27,7 @@ public class ExecutorMicroClient extends ExecutorRestClient {
 
     @Override
     protected String getAddress(){
-        return DiscoveryClientUtil.getAddress(discoveryClient, super.getAddress(), serviceName, serviceUrls);
+        return DiscoveryClientUtil.getAddress(discoveryClient, serviceName, serviceUrls);
     }
 
     public void discoveryClient(DiscoveryClient discoveryClient) {
