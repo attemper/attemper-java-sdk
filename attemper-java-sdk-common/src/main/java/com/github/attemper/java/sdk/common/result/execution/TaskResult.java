@@ -12,7 +12,7 @@ public class TaskResult extends LogResult {
     /**
      * in the task scope
      */
-    protected Map<String, String> dataMap;
+    protected Map<String, Object> dataMap;
 
     public Map<String, Object> getParamMap() {
         return paramMap;
@@ -23,11 +23,11 @@ public class TaskResult extends LogResult {
         return this;
     }
 
-    public Map<String, String> getDataMap() {
+    public Map<String, Object> getDataMap() {
         return dataMap;
     }
 
-    public TaskResult setDataMap(Map<String, String> dataMap) {
+    public TaskResult setDataMap(Map<String, Object> dataMap) {
         this.dataMap = dataMap;
         return this;
     }

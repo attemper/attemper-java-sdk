@@ -6,8 +6,6 @@ public class MetaParam extends BaseExecutionParam {
 
     protected String parentActInstId;
 
-    protected String executionId;
-
     protected String procInstId;
 
     protected String jobName;
@@ -22,15 +20,6 @@ public class MetaParam extends BaseExecutionParam {
 
     public MetaParam setParentActInstId(String parentActInstId) {
         this.parentActInstId = parentActInstId;
-        return this;
-    }
-
-    public String getExecutionId() {
-        return executionId;
-    }
-
-    public MetaParam setExecutionId(String executionId) {
-        this.executionId = executionId;
         return this;
     }
 

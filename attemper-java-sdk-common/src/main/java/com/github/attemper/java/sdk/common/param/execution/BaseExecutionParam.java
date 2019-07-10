@@ -7,6 +7,8 @@ public class BaseExecutionParam implements BaseParam {
 
     protected String requestPath;
 
+    protected String executionId;
+
     protected String actInstId;
 
     public String getRequestPath() {
@@ -15,6 +17,15 @@ public class BaseExecutionParam implements BaseParam {
 
     public BaseExecutionParam setRequestPath(String requestPath) {
         this.requestPath = requestPath;
+        return this;
+    }
+
+    public String getExecutionId() {
+        return executionId;
+    }
+
+    public BaseExecutionParam setExecutionId(String executionId) {
+        this.executionId = executionId;
         return this;
     }
 
