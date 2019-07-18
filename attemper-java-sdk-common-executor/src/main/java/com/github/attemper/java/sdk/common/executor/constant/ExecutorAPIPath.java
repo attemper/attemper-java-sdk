@@ -6,7 +6,7 @@ public class ExecutorAPIPath {
 
     public static final String SIGNAL = SdkAPIPath.API_PATH + "/signal";
 
-    public static final String APPEND_LOG = SdkAPIPath.API_PATH + "/log/append";
+    //public static final String APPEND_LOG = SdkAPIPath.API_PATH + "/log/append";
 
     public static final class RouterPath {
         private static final String SUB_PATH = "/router";

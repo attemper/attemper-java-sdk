@@ -126,11 +126,10 @@ public class HttpClientSingleton {
                     ? new HttpDelete(builder.build()) : new HttpGet(builder.build());
             return execute(httpUriRequest, context, clazz);
         } catch (URISyntaxException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }  catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
@@ -180,15 +179,16 @@ public class HttpClientSingleton {
             }
         } catch (HttpHostConnectException ex){
 	        restClient.removeDisconnectAddress();
+            throw new RuntimeException(ex);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 if(httpClient != null){
                     httpClient.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return baseResult;
