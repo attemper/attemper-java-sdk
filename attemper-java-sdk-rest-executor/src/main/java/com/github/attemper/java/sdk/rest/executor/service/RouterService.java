@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 
 @Service
 public class RouterService {
@@ -24,28 +23,33 @@ public class RouterService {
 
     public Object route(RouterParam routerParam) {
         BeanParam beanParam = routerParam.getBeanParam();
-        Object bean = SpringContextUtil.getBean(beanParam.getBeanName());
+        Object bean;
         LogResult errorLogResult = new LogResult()
                 .setSuccess(false)
                 .setLogKey(String.valueOf(SdkCommonConstants.INTERNAL_SERVER_ERROR));
+        try {
+            bean = SpringContextUtil.getBean(beanParam.getBeanName());
+        } catch (Exception e) {
+            return toLog(errorLogResult, "get bean occurred error:%s", beanParam.getBeanName());
+        }
         if (bean == null) {
-            return toLog(errorLogResult, "bean is null:{}", beanParam.getBeanName());
+            return toLog(errorLogResult, "bean is null:%s", beanParam.getBeanName());
         }
         Method method = ReflectionUtils.findMethod(bean.getClass(), beanParam.getMethodName(), TaskParam.class);
         if (method == null) {
-            return toLog(errorLogResult, "method is null:{}", beanParam.getMethodName());
+            return toLog(errorLogResult, "method is null:%s", beanParam.getMethodName());
         }
         TaskParam taskExecutionParam = new TaskParam();
         Class<?> resolveClass;
         try {
             Method mostSpecificMethod = AopUtils.getMostSpecificMethod(method, AopUtils.getTargetClass(bean));
             if (mostSpecificMethod == null) {
-                return toLog(errorLogResult, "proxied method is null:{}", beanParam.getMethodName());
+                return toLog(errorLogResult, "proxied method is null:%s", beanParam.getMethodName());
             }
             ResolvableType resolvableType = ResolvableType.forMethodParameter(mostSpecificMethod, 0);
             if (resolvableType == null
                     || resolvableType.getGenerics() == null || resolvableType.getGenerics().length == 0) {
-                return toLog(errorLogResult, "can not find method:{}", beanParam.getMethodName());
+                return toLog(errorLogResult, "can not find method:%s", beanParam.getMethodName());
             }
             resolveClass = resolvableType.getGeneric(0).resolve();
         } catch (Exception e) {
@@ -58,7 +62,7 @@ public class RouterService {
     }
 
     private LogResult toLog(LogResult errorLogResult, String pattern, Object... arguments) {
-        String logText = MessageFormat.format(pattern, arguments);
+        String logText = String.format(pattern, arguments);
         log.error(logText);
         return errorLogResult.setLogText(logText);
     }
