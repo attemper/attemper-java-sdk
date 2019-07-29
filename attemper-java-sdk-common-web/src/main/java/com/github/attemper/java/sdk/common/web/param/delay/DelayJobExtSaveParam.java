@@ -1,5 +1,6 @@
 package com.github.attemper.java.sdk.common.web.param.delay;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.attemper.java.sdk.common.param.BaseParam;
 import com.github.attemper.java.sdk.common.util.StringUtils;
 
@@ -12,10 +13,12 @@ public class DelayJobExtSaveParam implements BaseParam {
 
     protected String jobName;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     protected Date startTime;
 
     protected Integer interval;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     protected Date endTime;
 
     protected Integer misfireInstruction;
