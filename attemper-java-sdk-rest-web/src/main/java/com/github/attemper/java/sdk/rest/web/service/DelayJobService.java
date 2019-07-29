@@ -14,37 +14,45 @@ public class DelayJobService {
 
     private WebRestClient webRestClient;
 
-    public BaseResult<DelayJobResult> add(String jobName, Date startTime) {
+    public BaseResult<DelayJobResult> startThenEnd(String jobName, Date startTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setJobName(jobName)
-                .setStartTime(startTime);
+                .setStartTime(startTime)
+                .setEndTime(startTime)
+                .setInterval(1)
+                .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> add(String jobName, Date startTime, int interval, Date endTime) {
+    public BaseResult<DelayJobResult> startWithIntervalToEnd(String jobName, Date startTime, int interval, Date endTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
                 .setInterval(interval)
-                .setEndTime(endTime);
+                .setEndTime(endTime)
+                .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> add(String id, String jobName, Date startTime) {
+    public BaseResult<DelayJobResult> startThenEndOfBizId(String id, String jobName, Date startTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setId(id)
                 .setJobName(jobName)
-                .setStartTime(startTime);
+                .setStartTime(startTime)
+                .setEndTime(startTime)
+                .setInterval(1)
+                .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> add(String id, String jobName, Date startTime, Integer interval, Date endTime) {
+    public BaseResult<DelayJobResult> startWithIntervalToEndOfBizId(String id, String jobName, Date startTime, int interval, Date endTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setId(id)
                 .setJobName(jobName)
                 .setStartTime(startTime)
                 .setInterval(interval)
-                .setEndTime(endTime);
+                .setEndTime(endTime)
+                .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
