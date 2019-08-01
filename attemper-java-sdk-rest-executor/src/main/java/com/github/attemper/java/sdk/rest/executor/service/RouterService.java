@@ -30,7 +30,7 @@ public class RouterService {
         try {
             bean = SpringContextUtil.getBean(beanParam.getBeanName());
         } catch (Exception e) {
-            return toLog(errorLogResult, "get bean occurred error:%s", beanParam.getBeanName());
+            return toLog(errorLogResult, "get bean occurred error:%s\nexception:%s", beanParam.getBeanName(), e.getMessage());
         }
         if (bean == null) {
             return toLog(errorLogResult, "bean is null:%s", beanParam.getBeanName());
