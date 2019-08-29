@@ -5,6 +5,7 @@ import com.github.attemper.java.sdk.common.executor.param.execution.TaskParam;
 import com.github.attemper.java.sdk.common.executor.param.router.BeanParam;
 import com.github.attemper.java.sdk.common.executor.param.router.RouterParam;
 import com.github.attemper.java.sdk.common.result.execution.LogResult;
+import com.github.attemper.java.sdk.common.util.ExceptionUtil;
 import com.github.attemper.java.sdk.rest.spring.SpringContextUtil;
 import com.github.attemper.java.sdk.rest.util.BeanUtil;
 import org.slf4j.Logger;
@@ -36,29 +37,45 @@ public class RouterService {
             return toLog(errorLogResult, "bean is null:%s", beanParam.getBeanName());
         }
         Method method = ReflectionUtils.findMethod(bean.getClass(), beanParam.getMethodName(), TaskParam.class);
-        if (method == null) {
-            return toLog(errorLogResult, "method is null:%s", beanParam.getMethodName());
-        }
-        TaskParam taskExecutionParam = new TaskParam();
-        Class<?> resolveClass;
-        try {
-            Method mostSpecificMethod = AopUtils.getMostSpecificMethod(method, AopUtils.getTargetClass(bean));
-            if (mostSpecificMethod == null) {
-                return toLog(errorLogResult, "proxied method is null:%s", beanParam.getMethodName());
+        if (method != null) {
+            TaskParam taskExecutionParam = new TaskParam();
+            Class<?> resolveClass;
+            try {
+                Method mostSpecificMethod = AopUtils.getMostSpecificMethod(method, AopUtils.getTargetClass(bean));
+                if (mostSpecificMethod == null) {
+                    return toLog(errorLogResult, "proxied method is null:%s", beanParam.getMethodName());
+                }
+                ResolvableType resolvableType = ResolvableType.forMethodParameter(mostSpecificMethod, 0);
+                if (resolvableType == null
+                        || resolvableType.getGenerics() == null || resolvableType.getGenerics().length == 0) {
+                    return toLog(errorLogResult, "can not find method:%s", beanParam.getMethodName());
+                }
+                resolveClass = resolvableType.getGeneric(0).resolve();
+                taskExecutionParam.setMetaParam(routerParam.getMetaParam())
+                        .setBizParam(BeanUtil.map2Bean(resolveClass, routerParam.getBizParamMap()));
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return errorLogResult.setLogText(ExceptionUtil.getStackTrace(e));
             }
-            ResolvableType resolvableType = ResolvableType.forMethodParameter(mostSpecificMethod, 0);
-            if (resolvableType == null
-                    || resolvableType.getGenerics() == null || resolvableType.getGenerics().length == 0) {
-                return toLog(errorLogResult, "can not find method:%s", beanParam.getMethodName());
+            try {
+                return ReflectionUtils.invokeMethod(method, bean, taskExecutionParam);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return errorLogResult.setLogText(ExceptionUtil.getStackTrace(e));
             }
-            resolveClass = resolvableType.getGeneric(0).resolve();
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return errorLogResult.setLogText(e.getMessage());
+        } else {
+            method = ReflectionUtils.findMethod(bean.getClass(), beanParam.getMethodName());
+            if (method == null) {
+                return toLog(errorLogResult, "method is null:%s", beanParam.getMethodName());
+            } else {
+                try {
+                    return ReflectionUtils.invokeMethod(method, bean);
+                } catch (Exception e) {
+                    log.error(e.getMessage(), e);
+                    return errorLogResult.setLogText(ExceptionUtil.getStackTrace(e));
+                }
+            }
         }
-        taskExecutionParam.setMetaParam(routerParam.getMetaParam())
-                .setBizParam(BeanUtil.map2Bean(resolveClass, routerParam.getBizParamMap()));
-        return ReflectionUtils.invokeMethod(method, bean, taskExecutionParam);
     }
 
     private LogResult toLog(LogResult errorLogResult, String pattern, Object... arguments) {
