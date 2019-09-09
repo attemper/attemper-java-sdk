@@ -6,7 +6,7 @@ package com.github.attemper.java.sdk.common.param;
 public interface BaseParam {
 
     /**
-     * @return
+     * @return error code or msg
      */
     String validate();
 

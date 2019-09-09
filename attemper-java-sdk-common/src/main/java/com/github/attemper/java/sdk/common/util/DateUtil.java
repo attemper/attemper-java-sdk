@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 日期工具类
+ * date util
  */
 public class DateUtil {
 
@@ -15,8 +15,8 @@ public class DateUtil {
     /**
      * format date string to date of yyyy-MM-dd
      *
-     * @param dateStr
-     * @return
+     * @param dateStr like 2019-09-09
+     * @return date
      */
     public static synchronized Date parseDateStrToYYYYMMDD(String dateStr) {
         return getDate(dateStr, DATE_FORMAT_YYYYMMDD);
@@ -25,8 +25,8 @@ public class DateUtil {
     /**
      * format date string to date of yyyy-MM-dd HH:mm:ss SSS
      *
-     * @param dateStr
-     * @return
+     * @param dateStr like 2019-09-09 12:59:01 012
+     * @return date
      */
     public static synchronized Date parseDateStrToYYYYMMDDHHMMSSSSS(String dateStr) {
         return getDate(dateStr, DATE_FORMAT_YYYYMMDDHHMMSSSSS);

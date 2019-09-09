@@ -15,8 +15,8 @@ public class LogResult {
     /**
      * The default vaule is <code>true</code>
      *
-     * @param success
-     * @return
+     * @param success true or false
+     * @return this
      */
     public LogResult setSuccess(boolean success) {
         this.success = success;

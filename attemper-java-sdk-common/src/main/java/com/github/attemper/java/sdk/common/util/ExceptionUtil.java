@@ -7,8 +7,8 @@ public class ExceptionUtil {
 
     /**
      * get full stack trace message
-     * @param t
-     * @return
+     * @param t throwable
+     * @return stack's error msg
      */
     public static String getStackTrace(Throwable t) {
         StringWriter sw = new StringWriter();

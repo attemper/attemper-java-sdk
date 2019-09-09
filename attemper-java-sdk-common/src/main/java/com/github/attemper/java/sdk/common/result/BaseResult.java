@@ -36,27 +36,6 @@ public class BaseResult<T> {
 		this.responseTime = new Date();
 	}
 
-	/**
-	 * @param code
-	 * @param msg
-	 * @return
-	 */
-	public static BaseResult put(int code, String msg) {
-		BaseResult r = new BaseResult();
-		r.code = code;
-		r.msg = msg;
-		return r;
-	}
-
-	/**
-	 * @param code
-	 * @param replaceMsg
-	 * @return
-	 */
-	public static BaseResult putWith(int code, String replaceMsg){
-		return put(code, replaceMsg);
-	}
-
 	public int getCode() {
 		return code;
 	}

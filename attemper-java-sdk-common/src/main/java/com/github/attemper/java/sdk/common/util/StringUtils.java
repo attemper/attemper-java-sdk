@@ -1,20 +1,15 @@
-/*########################################################################
- *#                                                                      #
- *#                      Copyright (c) 2018 by                           #
- *#          Shanghai Stock Exchange (SSE), Shanghai, China              #
- *#                       All rights reserved.                           #
- *#                                                                      #
- *########################################################################
-*/
 package com.github.attemper.java.sdk.common.util;
+
 /**
- * @auth ldang
- * @email ldang@sse.com.cn
- * @date 2018-01-11 17:36:49
- * string工具类
+ * string util
  */
 public class StringUtils {
-	
+
+	/**
+	 * The empty String <code>""</code>.
+	 */
+	public static final String EMPTY = "";
+
 	/**
      * <p>Checks if a CharSequence is empty ("") or null.</p>
      *
@@ -152,9 +147,25 @@ public class StringUtils {
      */
     public static boolean equalsIgnoreCase(String str1, String str2) {
         return str1 == null ? str2 == null : str1.equalsIgnoreCase(str2);
-    }
+	}
 
+	/**
+	 * <p>Removes control characters (char &lt;= 32) from both
+	 * ends of this String returning an empty String ("") if the String
+	 * is empty ("") after the trim or if it is <code>null</code>.
+	 *
+	 * <pre>
+	 * StringUtils.trimToEmpty(null)          = ""
+	 * StringUtils.trimToEmpty("")            = ""
+	 * StringUtils.trimToEmpty("     ")       = ""
+	 * StringUtils.trimToEmpty("abc")         = "abc"
+	 * StringUtils.trimToEmpty("    abc    ") = "abc"
+	 * </pre>
+	 *
+	 * @param str the String to be trimmed, may be null
+	 * @return the trimmed String, or an empty String if <code>null</code> input
+	 */
 	public static String trimToEmpty(String str) {
-		return str == null ? "" : str.trim();
+		return str == null ? EMPTY : str.trim();
 	}
 }
