@@ -40,7 +40,6 @@ import java.util.List;
 
 /**
  * http util
- * @author ldang
  */
 public class HttpClientSingleton {
 
@@ -249,8 +248,8 @@ public class HttpClientSingleton {
             result.setDuration(jsonNode.get(SdkCommonConstants.duration).asText());
         }
         if(jsonNode.has(SdkCommonConstants.responseTime)) {
-            result.setResponseTime(DateUtil.parseDateStrToYYYYMMDDHHMMSSSSS(
-                    jsonNode.get(SdkCommonConstants.responseTime).asText()));
+            result.setResponseTime(DateUtil.parse(
+                    jsonNode.get(SdkCommonConstants.responseTime).asText(), DateUtil.DATE_FORMAT_YYYYMMDDHHMMSSSSS));
         }
         return result;
     }
