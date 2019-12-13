@@ -1,9 +1,5 @@
 package com.github.attemper.java.sdk.common.result;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import java.util.Date;
-
 public class BaseResult<T> {
 
 	/**
@@ -17,10 +13,9 @@ public class BaseResult<T> {
 	protected String msg;
 
 	/**
-	 * response time,format is yyyy-MM-dd HH:mm:ss
+	 * response time in timestamp
 	 */
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-	protected Date responseTime;
+	protected Long handleTime;
 
 	/**
 	 * time unit is second
@@ -33,7 +28,7 @@ public class BaseResult<T> {
 	protected T result;
 
 	public BaseResult() {
-		this.responseTime = new Date();
+		this.handleTime = System.currentTimeMillis();
 	}
 
 	public int getCode() {
@@ -52,12 +47,12 @@ public class BaseResult<T> {
 		this.msg = msg;
 	}
 
-	public Date getResponseTime() {
-		return responseTime;
+	public Long getHandleTime() {
+		return handleTime;
 	}
 
-	public void setResponseTime(Date responseTime) {
-		this.responseTime = responseTime;
+	public void setHandleTime(Long handleTime) {
+		this.handleTime = handleTime;
 	}
 
 	public String getDuration() {
@@ -81,7 +76,7 @@ public class BaseResult<T> {
 		return "BaseResult{" +
 				"code=" + code +
 				", msg='" + msg + '\'' +
-				", responseTime='" + responseTime + '\'' +
+				", handleTime='" + handleTime + '\'' +
 				", duration='" + duration + '\'' +
 				", result=" + result +
 				'}';

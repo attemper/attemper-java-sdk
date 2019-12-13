@@ -1,10 +1,8 @@
 package com.github.attemper.java.sdk.common.web.param.delay;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.attemper.java.sdk.common.param.BaseParam;
 import com.github.attemper.java.sdk.common.util.StringUtils;
 
-import java.util.Date;
 import java.util.List;
 
 public class DelayJobExtSaveParam implements BaseParam {
@@ -13,13 +11,11 @@ public class DelayJobExtSaveParam implements BaseParam {
 
     protected String jobName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected Date startTime;
+    protected Long startTime;
 
     protected Integer interval;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected Date endTime;
+    protected Long endTime;
 
     protected Integer misfireInstruction;
 
@@ -51,11 +47,11 @@ public class DelayJobExtSaveParam implements BaseParam {
         return this;
     }
 
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public DelayJobExtSaveParam setStartTime(Date startTime) {
+    public DelayJobExtSaveParam setStartTime(Long startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -69,11 +65,11 @@ public class DelayJobExtSaveParam implements BaseParam {
         return this;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public DelayJobExtSaveParam setEndTime(Date endTime) {
+    public DelayJobExtSaveParam setEndTime(Long endTime) {
         this.endTime = endTime;
         return this;
     }

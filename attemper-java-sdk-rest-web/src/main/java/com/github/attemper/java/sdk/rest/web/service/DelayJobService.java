@@ -7,14 +7,13 @@ import com.github.attemper.java.sdk.common.web.result.delay.DelayJobResult;
 import com.github.attemper.java.sdk.rest.web.client.WebRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 public class DelayJobService {
 
     private WebRestClient webRestClient;
 
-    public BaseResult<DelayJobResult> startThenEnd(String jobName, Date startTime) {
+    public BaseResult<DelayJobResult> startThenEnd(String jobName, Long startTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
@@ -24,7 +23,7 @@ public class DelayJobService {
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> startWithIntervalToEnd(String jobName, Date startTime, int interval, Date endTime) {
+    public BaseResult<DelayJobResult> startWithIntervalToEnd(String jobName, Long startTime, int interval, Long endTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
@@ -34,7 +33,7 @@ public class DelayJobService {
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> startThenEndOfBizId(String id, String jobName, Date startTime) {
+    public BaseResult<DelayJobResult> startThenEndOfBizId(String id, String jobName, Long startTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setId(id)
                 .setJobName(jobName)
@@ -45,7 +44,7 @@ public class DelayJobService {
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
 
-    public BaseResult<DelayJobResult> startWithIntervalToEndOfBizId(String id, String jobName, Date startTime, int interval, Date endTime) {
+    public BaseResult<DelayJobResult> startWithIntervalToEndOfBizId(String id, String jobName, Long startTime, int interval, Long endTime) {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setId(id)
                 .setJobName(jobName)
