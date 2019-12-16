@@ -13,7 +13,7 @@ public class DelayJobExtSaveParam implements BaseParam {
 
     protected Long startTime;
 
-    protected Integer interval;
+    protected Integer repeatInterval;
 
     protected Long endTime;
 
@@ -56,12 +56,12 @@ public class DelayJobExtSaveParam implements BaseParam {
         return this;
     }
 
-    public Integer getInterval() {
-        return interval;
+    public Integer getRepeatInterval() {
+        return repeatInterval;
     }
 
-    public DelayJobExtSaveParam setInterval(Integer interval) {
-        this.interval = interval;
+    public DelayJobExtSaveParam setRepeatInterval(Integer repeatInterval) {
+        this.repeatInterval = repeatInterval;
         return this;
     }
 

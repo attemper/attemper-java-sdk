@@ -18,7 +18,7 @@ public class DelayJobService {
                 .setJobName(jobName)
                 .setStartTime(startTime)
                 .setEndTime(startTime)
-                .setInterval(1)
+                .setRepeatInterval(1)
                 .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
@@ -27,7 +27,7 @@ public class DelayJobService {
         DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setInterval(interval)
+                .setRepeatInterval(interval)
                 .setEndTime(endTime)
                 .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
@@ -39,7 +39,7 @@ public class DelayJobService {
                 .setJobName(jobName)
                 .setStartTime(startTime)
                 .setEndTime(startTime)
-                .setInterval(1)
+                .setRepeatInterval(1)
                 .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
     }
@@ -49,7 +49,7 @@ public class DelayJobService {
                 .setId(id)
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setInterval(interval)
+                .setRepeatInterval(interval)
                 .setEndTime(endTime)
                 .setMisfireInstruction(2);
         return webRestClient.addDelayJob(delayJobExtSaveParam);
