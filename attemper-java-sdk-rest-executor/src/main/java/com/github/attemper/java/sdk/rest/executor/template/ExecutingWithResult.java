@@ -4,5 +4,5 @@ import com.github.attemper.java.sdk.common.result.execution.LogResult;
 
 public interface ExecutingWithResult {
 
-    LogResult execute();
+    LogResult execute() throws Exception;
 }
