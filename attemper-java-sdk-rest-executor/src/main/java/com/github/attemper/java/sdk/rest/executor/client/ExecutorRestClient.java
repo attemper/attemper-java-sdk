@@ -6,6 +6,7 @@ import com.github.attemper.java.sdk.common.result.BaseResult;
 import com.github.attemper.java.sdk.common.util.StringUtils;
 import com.github.attemper.java.sdk.rest.client.RestClient;
 import com.github.attemper.java.sdk.rest.util.HttpClientSingleton;
+import org.apache.http.client.methods.HttpPost;
 
 public class ExecutorRestClient extends RestClient {
 
@@ -19,7 +20,8 @@ public class ExecutorRestClient extends RestClient {
 */
 
     public BaseResult<Void> signal(EndParam endParam) {
-        return HttpClientSingleton.getInstance().post(
+        return HttpClientSingleton.getInstance().antiGet(
+                HttpPost.METHOD_NAME,
                 getUrlByRequestPath(endParam.getBaseExecutionParam().getRequestPath(), ExecutorAPIPath.SIGNAL),
                 endParam,
                 Void.class);

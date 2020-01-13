@@ -10,6 +10,7 @@ import com.github.attemper.java.sdk.common.util.DateUtil;
 import com.github.attemper.java.sdk.rest.client.RestClient;
 import com.github.attemper.java.sdk.rest.context.AttemperContext;
 import com.github.attemper.java.sdk.rest.context.DefaultContext;
+import com.github.attemper.java.sdk.rest.entity.MyHttpDelete;
 import com.github.attemper.java.sdk.rest.handler.AfterHandler;
 import com.github.attemper.java.sdk.rest.handler.PreHandler;
 import com.github.attemper.java.sdk.rest.interceptor.RequestInterceptor;
@@ -18,10 +19,7 @@ import org.apache.commons.codec.CharEncoding;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.StringEntity;
@@ -66,50 +64,45 @@ public class HttpClientSingleton {
         return singleton;
     }
 
-	/**
-     * post
-	 * @param url
-	 * @param paramObj
-	 * @param clazz
-	 * @return
-	 */
-	public BaseResult post(String url, Object paramObj, Class<?> clazz){
-		HttpPost httpPost = new HttpPost(url);
-        String json = BeanUtil.bean2JsonStr(paramObj);
-        StringEntity strEntity = new StringEntity(json, Charset.forName(CharEncoding.UTF_8));
-        strEntity.setContentType(SdkCommonConstants.APPLICATION_JSON);
-        httpPost.setEntity(strEntity);
-        AttemperContext context = new DefaultContext();
-        context
-                .url(url)
-                .requestMethod(HttpPost.METHOD_NAME)
-                .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
-        return execute(httpPost, context, clazz);
-	}
-
     /**
-     * post
-     *
+     * Support POST/PUT/DELETE
+     * @param methodName
      * @param url
      * @param paramObj
      * @param clazz
      * @return
      */
-    public BaseResult delete(String url, Object paramObj, Class<?> clazz) {
-        return getOrDelete(HttpDelete.METHOD_NAME, url, paramObj, clazz);
+    public BaseResult antiGet(String methodName, String url, Object paramObj, Class<?> clazz){
+        HttpEntityEnclosingRequestBase httpRequest;
+        if (HttpPost.METHOD_NAME.equals(methodName)) {
+            httpRequest = new HttpPost(url);
+        } else if (HttpDelete.METHOD_NAME.equals(methodName)) {
+            httpRequest = new MyHttpDelete(url);
+        } else if (HttpPut.METHOD_NAME.equals(methodName)) {
+            httpRequest = new HttpPut(url);
+        } else {
+            throw new IllegalArgumentException(methodName);
+        }
+        String json = BeanUtil.bean2JsonStr(paramObj);
+        StringEntity strEntity = new StringEntity(json, Charset.forName(CharEncoding.UTF_8));
+        strEntity.setContentType(SdkCommonConstants.APPLICATION_JSON);
+        httpRequest.setEntity(strEntity);
+        AttemperContext context = new DefaultContext();
+        context
+                .url(url)
+                .requestMethod(HttpPost.METHOD_NAME)
+                .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
+        return execute(httpRequest, context, clazz);
     }
 
     /**
-     * get
+     * Support GET
      * @param url
+     * @param paramObj
 	 * @param clazz
 	 * @return
 	 */
 	public BaseResult get(String url, Object paramObj, Class<?> clazz){
-        return getOrDelete(HttpGet.METHOD_NAME, url, paramObj, clazz);
-	}
-
-	private BaseResult getOrDelete(String methodName, String url, Object paramObj, Class<?> clazz) {
         try {
             URIBuilder builder = new URIBuilder(url);
             builder.setCharset(Charset.forName(CharEncoding.UTF_8));
@@ -119,17 +112,16 @@ public class HttpClientSingleton {
             AttemperContext context = new DefaultContext();
             context
                     .url(url)
-                    .requestMethod(methodName)
+                    .requestMethod(HttpGet.METHOD_NAME)
                     .commonParam(paramObj instanceof BaseParam ? (BaseParam) paramObj : null);
-            HttpUriRequest httpUriRequest = HttpDelete.METHOD_NAME.equals(methodName)
-                    ? new HttpDelete(builder.build()) : new HttpGet(builder.build());
+            HttpUriRequest httpUriRequest = new HttpGet(builder.build());
             return execute(httpUriRequest, context, clazz);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }  catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
+	}
 
     /**
      * @param httpUriRequest

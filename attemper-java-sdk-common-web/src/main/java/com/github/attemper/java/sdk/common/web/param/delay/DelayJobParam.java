@@ -5,7 +5,7 @@ import com.github.attemper.java.sdk.common.util.StringUtils;
 
 import java.util.List;
 
-public class DelayJobExtSaveParam implements BaseParam {
+public class DelayJobParam implements BaseParam {
 
     protected String id;
 
@@ -14,6 +14,8 @@ public class DelayJobExtSaveParam implements BaseParam {
     protected Long startTime;
 
     protected Integer repeatInterval;
+
+    protected int repeatCount = -1;
 
     protected Long endTime;
 
@@ -33,7 +35,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return id;
     }
 
-    public DelayJobExtSaveParam setId(String id) {
+    public DelayJobParam setId(String id) {
         this.id = id;
         return this;
     }
@@ -42,7 +44,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return jobName;
     }
 
-    public DelayJobExtSaveParam setJobName(String jobName) {
+    public DelayJobParam setJobName(String jobName) {
         this.jobName = jobName;
         return this;
     }
@@ -51,7 +53,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return startTime;
     }
 
-    public DelayJobExtSaveParam setStartTime(Long startTime) {
+    public DelayJobParam setStartTime(Long startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -60,8 +62,17 @@ public class DelayJobExtSaveParam implements BaseParam {
         return repeatInterval;
     }
 
-    public DelayJobExtSaveParam setRepeatInterval(Integer repeatInterval) {
+    public DelayJobParam setRepeatInterval(Integer repeatInterval) {
         this.repeatInterval = repeatInterval;
+        return this;
+    }
+
+    public int getRepeatCount() {
+        return repeatCount;
+    }
+
+    public DelayJobParam setRepeatCount(int repeatCount) {
+        this.repeatCount = repeatCount;
         return this;
     }
 
@@ -69,7 +80,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return endTime;
     }
 
-    public DelayJobExtSaveParam setEndTime(Long endTime) {
+    public DelayJobParam setEndTime(Long endTime) {
         this.endTime = endTime;
         return this;
     }
@@ -78,7 +89,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return misfireInstruction;
     }
 
-    public DelayJobExtSaveParam setMisfireInstruction(Integer misfireInstruction) {
+    public DelayJobParam setMisfireInstruction(Integer misfireInstruction) {
         this.misfireInstruction = misfireInstruction;
         return this;
     }
@@ -87,7 +98,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return calendarNames;
     }
 
-    public DelayJobExtSaveParam setCalendarNames(List<String> calendarNames) {
+    public DelayJobParam setCalendarNames(List<String> calendarNames) {
         this.calendarNames = calendarNames;
         return this;
     }
