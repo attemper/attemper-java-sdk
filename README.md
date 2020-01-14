@@ -1,8 +1,9 @@
 # attemper-java-sdk
 任务调度中心[attemper](https://github.com/attemper/attemper)的java sdk
+- 仅适用于*Spring Boot/MVC*项目
 
 ## 与**执行器**交互
-适用于有*** Http任务的Spring Boot/MVC ***项目
+满足有* Http任务* 的需求
 - `attemper-java-sdk-micro-executor`: 适用`spring boot`
 - `attemper-java-sdk-rest-executor`: 适用`spring mvc`
 
@@ -12,7 +13,7 @@ dispatch.executor.service-name=#执行器的服务名
 ```
  
 ## 与**调度中心后端**交互
-*** 目前只有延迟任务才需要用之 ***  
+* 目前只有延迟任务才需要用之 *  
   - `attemper-java-sdk-micro-web`: 适用`spring boot`
   - `attemper-java-sdk-rest-web`: 适用`spring mvc`
 
