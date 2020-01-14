@@ -1,10 +1,8 @@
 package com.github.attemper.java.sdk.common.web.param.delay;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.attemper.java.sdk.common.param.BaseParam;
 import com.github.attemper.java.sdk.common.util.StringUtils;
 
-import java.util.Date;
 import java.util.List;
 
 public class DelayJobParam implements BaseParam {
@@ -13,13 +11,13 @@ public class DelayJobParam implements BaseParam {
 
     protected String jobName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected Date startTime;
+    protected Long startTime;
 
-    protected Integer interval;
+    protected Integer repeatInterval;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    protected Date endTime;
+    protected int repeatCount = -1;
+
+    protected Long endTime;
 
     protected Integer misfireInstruction;
 
@@ -51,29 +49,38 @@ public class DelayJobParam implements BaseParam {
         return this;
     }
 
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public DelayJobParam setStartTime(Date startTime) {
+    public DelayJobParam setStartTime(Long startTime) {
         this.startTime = startTime;
         return this;
     }
 
-    public Integer getInterval() {
-        return interval;
+    public Integer getRepeatInterval() {
+        return repeatInterval;
     }
 
-    public DelayJobParam setInterval(Integer interval) {
-        this.interval = interval;
+    public DelayJobParam setRepeatInterval(Integer repeatInterval) {
+        this.repeatInterval = repeatInterval;
         return this;
     }
 
-    public Date getEndTime() {
+    public int getRepeatCount() {
+        return repeatCount;
+    }
+
+    public DelayJobParam setRepeatCount(int repeatCount) {
+        this.repeatCount = repeatCount;
+        return this;
+    }
+
+    public Long getEndTime() {
         return endTime;
     }
 
-    public DelayJobParam setEndTime(Date endTime) {
+    public DelayJobParam setEndTime(Long endTime) {
         this.endTime = endTime;
         return this;
     }
