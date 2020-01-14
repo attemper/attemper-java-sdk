@@ -7,7 +7,7 @@ import com.github.attemper.java.sdk.common.util.StringUtils;
 import java.util.Date;
 import java.util.List;
 
-public class DelayJobExtSaveParam implements BaseParam {
+public class DelayJobParam implements BaseParam {
 
     protected String id;
 
@@ -37,7 +37,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return id;
     }
 
-    public DelayJobExtSaveParam setId(String id) {
+    public DelayJobParam setId(String id) {
         this.id = id;
         return this;
     }
@@ -46,7 +46,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return jobName;
     }
 
-    public DelayJobExtSaveParam setJobName(String jobName) {
+    public DelayJobParam setJobName(String jobName) {
         this.jobName = jobName;
         return this;
     }
@@ -55,7 +55,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return startTime;
     }
 
-    public DelayJobExtSaveParam setStartTime(Date startTime) {
+    public DelayJobParam setStartTime(Date startTime) {
         this.startTime = startTime;
         return this;
     }
@@ -64,7 +64,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return interval;
     }
 
-    public DelayJobExtSaveParam setInterval(Integer interval) {
+    public DelayJobParam setInterval(Integer interval) {
         this.interval = interval;
         return this;
     }
@@ -73,7 +73,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return endTime;
     }
 
-    public DelayJobExtSaveParam setEndTime(Date endTime) {
+    public DelayJobParam setEndTime(Date endTime) {
         this.endTime = endTime;
         return this;
     }
@@ -82,7 +82,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return misfireInstruction;
     }
 
-    public DelayJobExtSaveParam setMisfireInstruction(Integer misfireInstruction) {
+    public DelayJobParam setMisfireInstruction(Integer misfireInstruction) {
         this.misfireInstruction = misfireInstruction;
         return this;
     }
@@ -91,7 +91,7 @@ public class DelayJobExtSaveParam implements BaseParam {
         return calendarNames;
     }
 
-    public DelayJobExtSaveParam setCalendarNames(List<String> calendarNames) {
+    public DelayJobParam setCalendarNames(List<String> calendarNames) {
         this.calendarNames = calendarNames;
         return this;
     }
