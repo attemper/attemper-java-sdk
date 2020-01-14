@@ -24,44 +24,90 @@ public class DelayJobService {
         DelayJobParam delayJobParam = new DelayJobParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setEndTime(startTime)
-                .setInterval(1)
+                .setRepeatCount(0)
+                .setRepeatInterval(1)
                 .setMisfireInstruction(2);
-        return webRestClient.addDelayJob(delayJobExtSaveParam);
+        return addDelayJob(delayJobParam);
     }
 
-    public BaseResult<DelayJobResult> startWithIntervalToEnd(String jobName, Date startTime, int interval, Date endTime) {
-        DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
+    /**
+     * Run between startTime and endTime with interval seconds
+     * @param jobName the name of job you fires
+     * @param startTime startTime to mill seconds
+     * @param interval which seconds
+     * @param endTime endTime to mill seconds
+     * @return
+     */
+    public BaseResult<DelayJobResult> startWithIntervalToEnd(String jobName, Long startTime, int interval, Long endTime) {
+        DelayJobParam delayJobParam = new DelayJobParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setInterval(interval)
+                .setRepeatInterval(interval)
                 .setEndTime(endTime)
                 .setMisfireInstruction(2);
-        return webRestClient.addDelayJob(delayJobExtSaveParam);
+        return addDelayJob(delayJobParam);
     }
 
-    public BaseResult<DelayJobResult> startThenEndOfBizId(String id, String jobName, Date startTime) {
-        DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
+    /**
+     *  Just run once at startTime of a biz id
+     * @param id you can initialize bizId yourself as id(binding your biz)
+     * @param jobName the name of job you fires
+     * @param startTime startTime to mill seconds
+     * @return
+     */
+    public BaseResult<DelayJobResult> startThenEndOfBizId(String id, String jobName, Long startTime) {
+        DelayJobParam delayJobParam = new DelayJobParam()
                 .setId(id)
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setEndTime(startTime)
-                .setInterval(1)
+                .setRepeatCount(0)
+                .setRepeatInterval(1)
                 .setMisfireInstruction(2);
-        return webRestClient.addDelayJob(delayJobExtSaveParam);
+        return addDelayJob(delayJobParam);
     }
 
-    public BaseResult<DelayJobResult> startWithIntervalToEndOfBizId(String id, String jobName, Date startTime, int interval, Date endTime) {
-        DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
+    /**
+     * Run between startTime and endTime with interval seconds of a biz id
+     * @param id you can initialize bizId yourself as id(binding your biz)
+     * @param jobName the name of job you fires
+     * @param startTime startTime to mill seconds
+     * @param interval which seconds
+     * @param endTime endTime to mill seconds
+     * @return
+     */
+    public BaseResult<DelayJobResult> startWithIntervalToEndOfBizId(String id, String jobName, Long startTime, int interval, Long endTime) {
+        DelayJobParam delayJobParam = new DelayJobParam()
                 .setId(id)
                 .setJobName(jobName)
                 .setStartTime(startTime)
-                .setInterval(interval)
+                .setRepeatInterval(interval)
                 .setEndTime(endTime)
                 .setMisfireInstruction(2);
-        return webRestClient.addDelayJob(delayJobExtSaveParam);
+        return addDelayJob(delayJobParam);
     }
 
+    /**
+     * Diy for all fields of delayJobParam
+     * @param delayJobParam the pram of delay job
+     * @return
+     */
+    public BaseResult<DelayJobResult> addDelayJob(DelayJobParam delayJobParam) {
+        return webRestClient.addDelayJob(delayJobParam);
+    }
+
+    /**
+     * Remove the job you delayed by id
+     * @param id delay id
+     * @return
+     */
+    public BaseResult<Void> delete(String id) {
+        return delete(Arrays.asList(id));
+    }
+    /**
+     * Remove the job you delayed by batch ids
+     * @param ids delay ids
+     * @return
+     */
     public BaseResult<Void> delete(List<String> ids) {
         DelayJobIdsParam delayJobIdsParam = new DelayJobIdsParam().setIds(ids);
         return webRestClient.deleteDelayJob(delayJobIdsParam);
