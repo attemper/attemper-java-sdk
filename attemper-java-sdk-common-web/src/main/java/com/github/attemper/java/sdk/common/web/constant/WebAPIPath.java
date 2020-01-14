@@ -8,7 +8,5 @@ public class WebAPIPath {
         public static final String SUB_PATH = "/delay";
 
         public static final String $ = SdkAPIPath.API_PATH + SdkAPIPath.DISPATCH + SUB_PATH;
-
-        public static final String EXT = $ + "/ext";
     }
 }

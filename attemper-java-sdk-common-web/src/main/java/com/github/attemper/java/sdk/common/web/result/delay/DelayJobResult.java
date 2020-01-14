@@ -12,4 +12,9 @@ public class DelayJobResult {
         this.id = id;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "[" + "id=" + id + "]";
+    }
 }

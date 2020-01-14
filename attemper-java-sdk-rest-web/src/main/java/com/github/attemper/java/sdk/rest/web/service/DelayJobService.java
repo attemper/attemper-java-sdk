@@ -1,21 +1,27 @@
 package com.github.attemper.java.sdk.rest.web.service;
 
 import com.github.attemper.java.sdk.common.result.BaseResult;
-import com.github.attemper.java.sdk.common.web.param.delay.DelayJobExtSaveParam;
+import com.github.attemper.java.sdk.common.web.param.delay.DelayJobParam;
 import com.github.attemper.java.sdk.common.web.param.delay.DelayJobIdsParam;
 import com.github.attemper.java.sdk.common.web.result.delay.DelayJobResult;
 import com.github.attemper.java.sdk.rest.web.client.WebRestClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 
 public class DelayJobService {
 
     private WebRestClient webRestClient;
 
-    public BaseResult<DelayJobResult> startThenEnd(String jobName, Date startTime) {
-        DelayJobExtSaveParam delayJobExtSaveParam = new DelayJobExtSaveParam()
+    /**
+     * Just run once at startTime
+     * @param jobName the name of job you fires
+     * @param startTime startTime to mill seconds
+     * @return
+     */
+    public BaseResult<DelayJobResult> startThenEnd(String jobName, Long startTime) {
+        DelayJobParam delayJobParam = new DelayJobParam()
                 .setJobName(jobName)
                 .setStartTime(startTime)
                 .setEndTime(startTime)

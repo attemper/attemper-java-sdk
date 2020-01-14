@@ -8,6 +8,7 @@ import com.github.attemper.java.sdk.common.util.StringUtils;
 import com.github.attemper.java.sdk.rest.handler.AfterHandler;
 import com.github.attemper.java.sdk.rest.handler.PreHandler;
 import com.github.attemper.java.sdk.rest.util.HttpClientSingleton;
+import org.apache.http.client.methods.HttpPost;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,7 +43,7 @@ public class RestClient {
 	}
 
     public BaseResult<LoginResult> login() {
-		return HttpClientSingleton.getInstance().post(getUrl(SdkAPIPath.LoginPath.LOGIN_BY_ENCODED_USERNAME_PWD), loginParam, LoginResult.class);
+		return HttpClientSingleton.getInstance().antiGet(HttpPost.METHOD_NAME, getUrl(SdkAPIPath.LoginPath.LOGIN_BY_ENCODED_USERNAME_PWD), loginParam, LoginResult.class);
 	}
 	
 	/**

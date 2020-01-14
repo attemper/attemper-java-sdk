@@ -6,20 +6,17 @@ import com.github.attemper.java.sdk.common.result.BaseResult;
 import com.github.attemper.java.sdk.common.util.StringUtils;
 import com.github.attemper.java.sdk.rest.client.RestClient;
 import com.github.attemper.java.sdk.rest.util.HttpClientSingleton;
+import org.apache.http.client.methods.HttpPost;
 
 public class ExecutorRestClient extends RestClient {
-
-/*
-    public BaseResult<Void> appendLog(LogParam logParam) {
-        return HttpClientSingleton.getInstance().post(
-                getUrlByRequestPath(logParam.getBaseExecutionParam().getRequestPath(), ExecutorAPIPath.APPEND_LOG),
-                logParam,
-                Void.class);
-    }
-*/
-
+    /**
+     * After async http task executes completed, call this method to signal
+     * @param endParam
+     * @return
+     */
     public BaseResult<Void> signal(EndParam endParam) {
-        return HttpClientSingleton.getInstance().post(
+        return HttpClientSingleton.getInstance().antiGet(
+                HttpPost.METHOD_NAME,
                 getUrlByRequestPath(endParam.getBaseExecutionParam().getRequestPath(), ExecutorAPIPath.SIGNAL),
                 endParam,
                 Void.class);

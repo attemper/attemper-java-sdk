@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.attemper</groupId>
 	<artifactId>attemper-java-sdk</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>${project.artifactId}-common</module>
@@ -39,6 +39,24 @@
 		<maven.release.plugin.version>2.5.3</maven.release.plugin.version>
 		<maven.gpg.plugin.version>1.6</maven.gpg.plugin.version>
 	</properties>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	<distributionManagement>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Nexus Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Nexus Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -179,58 +197,4 @@
 		</plugins>
 	</build>
 
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>7</version>
-	</parent>
-	<description>The sdk of attemper</description>
-	<url>https://github.com/attemper/${project.artifactId}</url>
-	<organization>
-		<name>Shanghai Stock Exchange</name>
-		<url>http://www.sse.com.cn</url>
-	</organization>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	<scm>
-		<connection>scm:git:git@github.com:attemper/${project.artifactId}.git</connection>
-		<developerConnection>scm:git:git@github.com:attemper/${project.artifactId}.git</developerConnection>
-		<tag/>
-		<url>https://github.com/attemper/${project.artifactId}</url>
-	</scm>
-	<issueManagement>
-		<system>Issue</system>
-		<url>https://github.com/attemper/${project.artifactId}/issues</url>
-	</issueManagement>
-	<developers>
-		<developer>
-			<id>ldang264</id>
-			<name>Dang Ling</name>
-			<email>ldang@sse.com.cn</email>
-			<organization>Shanghai Stock Exchange</organization>
-			<organizationUrl>http://www.sse.com.cn</organizationUrl>
-			<roles>
-				<role>Primary Developer</role>
-			</roles>
-			<timezone>-6</timezone>
-		</developer>
-	</developers>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Nexus Release Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 </project>
