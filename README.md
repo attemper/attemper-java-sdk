@@ -13,7 +13,7 @@ dispatch.executor.service-name=#执行器的服务名
 ```
  
 ## 与**调度中心后端**交互
-* 目前只有延迟任务才需要用之 *  
+***目前只有延迟任务才需要用之***  
   - `attemper-java-sdk-micro-web`: 适用`spring boot`
   - `attemper-java-sdk-rest-web`: 适用`spring mvc`
 
